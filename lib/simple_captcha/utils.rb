@@ -6,17 +6,14 @@ module SimpleCaptcha #:nodoc
     def self.run(cmd, params = "", expected_outcodes = 0)
       command = %Q[#{cmd} #{params}].gsub(/\s+/, " ")
       command = "#{command} 2>&1"
-
       unless (image_magick_path = SimpleCaptcha.image_magick_path).blank?
         command = File.join(image_magick_path, command)
       end
-
       output = `#{command}`
 
       unless [expected_outcodes].flatten.include?($?.exitstatus)
         raise ::StandardError, "Error while running #{cmd}: #{output}"
       end
-
       output
     end
 

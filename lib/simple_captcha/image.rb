@@ -65,6 +65,7 @@ module SimpleCaptcha #:nodoc
     private
 
       def generate_simple_captcha_image(simple_captcha_key) #:nodoc
+
         amplitude, frequency = ImageHelpers.distortion(SimpleCaptcha.distortion)
         text = Utils::simple_captcha_value(simple_captcha_key)
 
@@ -81,9 +82,9 @@ module SimpleCaptcha #:nodoc
         if SimpleCaptcha.noise and SimpleCaptcha.noise > 0
           params << "-evaluate Uniform-noise #{SimpleCaptcha.noise}"
         end
-        params << "jpeg:-"
-
+        params << "captcha.jpeg"
         SimpleCaptcha::Utils::run("convert", params.join(' '))
+        "captcha.jpeg"
       end
   end
 end
